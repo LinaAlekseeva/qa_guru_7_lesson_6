@@ -58,12 +58,31 @@ def test_find_suitable_user():
         {"name": "Maria", "age": 18},
     ]
 
-    def get_Olga_from_ginen_list(given_list):
+    # TODO найдите пользователя с именем "Olga"
+    suitable_users = None
+    assert suitable_users == {"name": "Olga", "age": 45}
+
+    # TODO найдите всех пользователей младше 20 лет
+    suitable_users = None
+    assert suitable_users == [
+        {"name": "Stanislav", "age": 15},
+        {"name": "Maria", "age": 18},
+    ]
+
+    users = [
+        {"name": "Oleg", "age": 32},
+        {"name": "Sergey", "age": 24},
+        {"name": "Stanislav", "age": 15},
+        {"name": "Olga", "age": 45},
+        {"name": "Maria", "age": 18},
+    ]
+
+    def get_Olga_from_given_list(given_list):
         for user in given_list:
             if user["name"] == "Olga":
                 return user
 
-    suitable_users = get_Olga_from_ginen_list(users)
+    suitable_users = get_Olga_from_given_list(users)
     assert suitable_users == {"name": "Olga", "age": 45}
 
     def get_all_users_under_20_years_old(given_list):
@@ -91,28 +110,29 @@ def test_find_suitable_user():
 # >>> open_browser(browser_name="Chrome")
 # "Open Browser [Chrome]"
 
+
 def test_readable_function():
     open_browser(browser_name="Chrome")
     go_to_companyname_homepage(page_url="https://companyname.com")
     find_registration_button_on_login_page(page_url="https://companyname.com/login", button_text="Register")
 
 
+def get_readable_string(func, *args):
+    name = func.__name__.title().replace('_', ' ')
+    params = str(list(args)).replace("'", "")
+    return f'{name} {params}'
+
+
 def open_browser(browser_name):
-    actual_result = open_browser.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{browser_name}]'
-    print(actual_result)
+    actual_result = get_readable_string(open_browser, browser_name)
     assert actual_result == "Open Browser [Chrome]"
 
 
 def go_to_companyname_homepage(page_url):
-    actual_result = go_to_companyname_homepage.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{page_url}]'
-    print(actual_result)
+    actual_result = get_readable_string(go_to_companyname_homepage, page_url)
     assert actual_result == "Go To Companyname Homepage [https://companyname.com]"
 
 
 def find_registration_button_on_login_page(page_url, button_text):
-    actual_result = find_registration_button_on_login_page.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{page_url}, {button_text}]'
-    print(actual_result)
+    actual_result = get_readable_string(find_registration_button_on_login_page, page_url, button_text)
     assert actual_result == "Find Registration Button On Login Page [https://companyname.com/login, Register]"
